@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Modern Healthcare Consulting Firm</title>
   <style>
     body {
@@ -19,13 +19,10 @@
     }
 
     header {
-      background-color: #1e4f91;
-      color: white;
+      background-color: #b3d4fc; /* baby blue */
+      color: #111;
       padding: 4rem 2rem;
       text-align: center;
-      background-image: linear-gradient(rgba(30, 79, 145, 0.9), rgba(30, 79, 145, 0.9)), url('https://images.unsplash.com/photo-1588776814546-ec4505d05e3c');
-      background-size: cover;
-      background-position: center;
     }
 
     header h1 {
@@ -39,20 +36,51 @@
       margin: 0 auto 1.5rem;
     }
 
-    .cta-buttons button, .contact button {
+    /* Container for buttons and their bullet points */
+    .cta-buttons-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 800px;
+      margin: 2rem auto 0;
+      text-align: left;
+      gap: 1rem;
+    }
+
+    /* Each block with a button and bullets */
+    .cta-block {
+      width: 48%;
+    }
+
+    .cta-block button {
+      width: 100%;
       background-color: #153c70;
       border: none;
       padding: 1rem 2rem;
       color: white;
-      font-size: 1rem;
-      margin: 0.5rem;
+      font-size: 1.1rem;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-bottom: 1rem;
     }
 
-    .cta-buttons button:hover, .contact button:hover {
+    .cta-block button:hover {
       background-color: #0f2f58;
+    }
+
+    .cta-block .what-expect p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      color: #153c70;
+      position: relative;
+      padding-left: 1.5em;
+    }
+
+    .cta-block .what-expect p::before {
+      content: '✔️';
+      position: absolute;
+      left: 0;
+      color: #153c70;
     }
 
     section {
@@ -80,10 +108,6 @@
       font-size: 1.1rem;
     }
 
-    .what-expect p {
-      margin: 0.5rem 0;
-    }
-
     .values ul, .services ul {
       list-style-type: disc;
       padding-left: 1.5rem;
@@ -94,6 +118,11 @@
       color: white;
       padding: 2rem;
       text-align: center;
+      position: relative;
+    }
+
+    .footer-links {
+      margin-bottom: 1rem;
     }
 
     .footer-links a {
@@ -101,6 +130,22 @@
       margin: 0 0.5rem;
       color: #fff;
       text-decoration: underline;
+      position: relative;
+    }
+
+    /* Tooltip styling */
+    #tooltip {
+      position: fixed;
+      background: #333;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 1000;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -108,14 +153,23 @@
   <header>
     <h1>Revolutionizing Healthcare Operations for Clinics & Hospitals</h1>
     <p>We help healthcare facilities streamline clinical and administrative workflows to improve performance, reduce inefficiencies, and deliver exceptional patient care.</p>
-    <div class="cta-buttons">
-      <button>Schedule a Free Consultation</button>
-      <button>Download Our Services Guide</button>
-    </div>
-    <div class="what-expect">
-      <p>✔️ Revenue Insights – We'll assess areas where you're leaving money on the table in your revenue cycle.</p>
-      <p>✔️ Workflow Evaluation – Identify inefficiencies in your HIM, EHR, or clinical admin workflows.</p>
-      <p>✔️ Tailored Roadmap – Get custom, actionable next steps to boost compliance, staff efficiency, and financial outcomes.</p>
+    <div class="cta-buttons-container">
+      <div class="cta-block schedule-block">
+        <button>Schedule a Free Consultation</button>
+        <div class="what-expect">
+          <p>Revenue Insights – We'll assess areas where you're leaving money on the table in your revenue cycle.</p>
+          <p>Workflow Evaluation – Identify inefficiencies in your HIM, EHR, or clinical admin workflows.</p>
+          <p>Tailored Roadmap – Get custom, actionable next steps to boost compliance, staff efficiency, and financial outcomes.</p>
+        </div>
+      </div>
+      <div class="cta-block download-block">
+        <button>Download Our Services Guide</button>
+        <div class="what-expect">
+          <p>In-depth service descriptions and case studies</p>
+          <p>Client testimonials and success metrics</p>
+          <p>Step-by-step consulting engagement process</p>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -195,7 +249,6 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Modern Healthcare Consulting Firm</p>
     <div class="footer-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Use</a>
@@ -203,6 +256,45 @@
       <a href="#">Facebook</a>
       <a href="#">Contact</a>
     </div>
+    <p>&copy; 2025 Modern Healthcare Consulting Firm</p>
   </footer>
+
+  <!-- Tooltip container -->
+  <div id="tooltip"></div>
+
+  <script>
+    const tooltip = document.getElementById('tooltip');
+
+    document.querySelectorAll('footer .footer-links a').forEach(link => {
+      link.addEventListener('mousemove', e => {
+        const text = link.textContent.trim();
+        tooltip.textContent = `${text} is in the works and will be available to visit shortly`;
+        tooltip.style.opacity = '1';
+
+        // Position tooltip slightly above and to the right of cursor
+        const offsetX = 15;
+        const offsetY = -30;
+
+        let left = e.clientX + offsetX;
+        let top = e.clientY + offsetY;
+
+        // Prevent tooltip from going off right edge
+        if (left + tooltip.offsetWidth > window.innerWidth) {
+          left = e.clientX - tooltip.offsetWidth - offsetX;
+        }
+        // Prevent tooltip from going above viewport
+        if (top < 0) {
+          top = e.clientY + offsetY * -1;
+        }
+
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+      });
+
+      link.addEventListener('mouseleave', () => {
+        tooltip.style.opacity = '0';
+      });
+    });
+  </script>
 </body>
 </html>
