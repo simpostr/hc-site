@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schedule Your Strategy Session</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      color: #111;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #b3d4fc;
+      color: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background-color: #f5f9ff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #153c70;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0f2f58;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Schedule Your Free Strategy Session</h1>
+    <p>Fill out the form below and we’ll be in touch to confirm your call date and time.</p>
+  </header>
+
+  <form action="#" method="POST">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="organization">Organization / Facility Name</label>
+    <input type="text" id="organization" name="organization" required>
+
+    <label for="role">Your Role / Position</label>
+    <input type="text" id="role" name="role" required>
+
+    <label for="needs">Briefly Describe Your Needs</label>
+    <textarea id="needs" name="needs" rows="4" placeholder="Tell us what you’re hoping to improve, challenges you face, or goals for this consultation" required></textarea>
+
+    <label for="preferred-date">Preferred Date for Call</label>
+    <input type="date" id="preferred-date" name="preferred-date" required>
+
+    <label for="preferred-time">Preferred Time</label>
+    <input type="time" id="preferred-time" name="preferred-time" required>
+
+    <button type="submit">Submit Request</button>
+  </form>
+</body>
+</html>
