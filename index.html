@@ -36,23 +36,13 @@
       margin: 0 auto 1.5rem;
     }
 
-    /* Container for buttons and their bullet points */
-    .cta-buttons-container {
-      display: flex;
-      justify-content: space-between;
-      max-width: 800px;
-      margin: 2rem auto 0;
-      text-align: left;
-      gap: 1rem;
-    }
-
-    /* Each block with a button and bullets */
     .cta-block {
-      width: 48%;
+      max-width: 600px;
+      margin: 2rem auto 0;
+      text-align: center;
     }
 
     .cta-block button {
-      width: 100%;
       background-color: #153c70;
       border: none;
       padding: 1rem 2rem;
@@ -74,6 +64,7 @@
       color: #153c70;
       position: relative;
       padding-left: 1.5em;
+      text-align: left;
     }
 
     .cta-block .what-expect p::before {
@@ -133,7 +124,6 @@
       position: relative;
     }
 
-    /* Tooltip styling */
     #tooltip {
       position: fixed;
       background: #333;
@@ -153,22 +143,12 @@
   <header>
     <h1>Revolutionizing Healthcare Operations for Clinics & Hospitals</h1>
     <p>We help healthcare facilities streamline clinical and administrative workflows to improve performance, reduce inefficiencies, and deliver exceptional patient care.</p>
-    <div class="cta-buttons-container">
-      <div class="cta-block schedule-block">
-        <button>Schedule a Free Consultation</button>
-        <div class="what-expect">
-          <p>Revenue Insights – We'll assess areas where you're leaving money on the table in your revenue cycle.</p>
-          <p>Workflow Evaluation – Identify inefficiencies in your HIM, EHR, or clinical admin workflows.</p>
-          <p>Tailored Roadmap – Get custom, actionable next steps to boost compliance, staff efficiency, and financial outcomes.</p>
-        </div>
-      </div>
-      <div class="cta-block download-block">
-        <button>Download Our Services Guide</button>
-        <div class="what-expect">
-          <p>In-depth service descriptions and case studies</p>
-          <p>Client testimonials and success metrics</p>
-          <p>Step-by-step consulting engagement process</p>
-        </div>
+    <div class="cta-block">
+      <button>Schedule a Free Consultation</button>
+      <div class="what-expect">
+        <p>Revenue Insights – We'll assess areas where you're leaving money on the table in your revenue cycle.</p>
+        <p>Workflow Evaluation – Identify inefficiencies in your HIM, EHR, or clinical admin workflows.</p>
+        <p>Tailored Roadmap – Get custom, actionable next steps to boost compliance, staff efficiency, and financial outcomes.</p>
       </div>
     </div>
   </header>
@@ -244,7 +224,7 @@
     <p><strong>Let’s Get Started</strong></p>
     <p>Whether you're running a hospital or a private clinic, we're ready to help you run it better.</p>
     <p>📞 (123) 456-7890</p>
-    <p>📧 modernhealthcareconsulting@gmail.com</p>
+    <p>📧 contact@modernhealthcareconsulting.com</p>
     <button>Schedule a Strategy Session</button>
   </section>
 
@@ -259,38 +239,27 @@
     <p>&copy; 2025 Modern Healthcare Consulting Firm</p>
   </footer>
 
-  <!-- Tooltip container -->
   <div id="tooltip"></div>
-
   <script>
     const tooltip = document.getElementById('tooltip');
-
     document.querySelectorAll('footer .footer-links a').forEach(link => {
       link.addEventListener('mousemove', e => {
         const text = link.textContent.trim();
         tooltip.textContent = `${text} is in the works and will be available to visit shortly`;
         tooltip.style.opacity = '1';
-
-        // Position tooltip slightly above and to the right of cursor
         const offsetX = 15;
         const offsetY = -30;
-
         let left = e.clientX + offsetX;
         let top = e.clientY + offsetY;
-
-        // Prevent tooltip from going off right edge
         if (left + tooltip.offsetWidth > window.innerWidth) {
           left = e.clientX - tooltip.offsetWidth - offsetX;
         }
-        // Prevent tooltip from going above viewport
         if (top < 0) {
           top = e.clientY + offsetY * -1;
         }
-
         tooltip.style.left = left + 'px';
         tooltip.style.top = top + 'px';
       });
-
       link.addEventListener('mouseleave', () => {
         tooltip.style.opacity = '0';
       });
