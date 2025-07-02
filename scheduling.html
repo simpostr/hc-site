@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schedule Your Free Consultation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      color: #111;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #b3d4fc;
+      color: #111;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: #153c70;
+      border: none;
+      padding: 1rem 2rem;
+      color: white;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #0f2f58;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Schedule Your Free 30-Minute Strategy Call</h1>
+    <p>Fill out the form below and we'll reach out to confirm your appointment.</p>
+  </header>
+
+  <section>
+    <form id="interestForm" action="https://formspree.io/f/mdkzjarw" method="POST">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required />
+      <div class="error" id="emailError"></div>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required />
+      <div class="error" id="phoneError"></div>
+
+      <label for="organization">Organization</label>
+      <input type="text" id="organization" name="organization" />
+
+      <label for="role">Your Role/Title</label>
+      <input type="text" id="role" name="role" />
+
+      <label for="needs">Briefly Describe Your Needs</label>
+      <textarea id="needs" name="needs" rows="4" required></textarea>
+
+      <label for="date">Preferred Date</label>
+      <input type="date" id="date" name="date" required />
+      <div class="error" id="dateError"></div>
+
+      <label for="time">Preferred Time</label>
+      <input type="time" id="time" name="time" required />
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </section>
+
+  <script>
+    const form = document.getElementById('interestForm');
+
+    form.addEventListener('submit', function (e) {
+      let valid = true;
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('phoneError').textContent = '';
+      document.getElementById('dateError').textContent = '';
+
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const date = document.getElementById('date').value;
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.(com|org|net|edu)$/i;
+      if (!emailPattern.test(email)) {
+        document.getElementById('emailError').textContent = 'Please enter a valid email (.com, .org, .net, .edu).';
+        valid = false;
+      }
+
+      const phonePattern = /^\d{7,15}$/;
+      if (!phonePattern.test(phone.replace(/[^\d]/g, ''))) {
+        document.getElementById('phoneError').textContent = 'Please enter a valid phone number with 7 to 15 digits.';
+        valid = false;
+      }
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const inputDate = new Date(date);
+      inputDate.setHours(0,0,0,0);
+      if (inputDate < today) {
+        document.getElementById('dateError').textContent = 'Please choose today or a future date.';
+        valid = false;
+      }
+
+      if (!valid) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
