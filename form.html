@@ -42,12 +42,18 @@
       font-weight: bold;
     }
 
-    input, textarea {
+    input, textarea, select {
       padding: 0.75rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1rem;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
 
     button {
@@ -59,17 +65,11 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-top: 1rem;
     }
 
     button:hover {
       background-color: #0f2f58;
-    }
-
-    .error {
-      color: red;
-      margin-top: -1rem;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -80,7 +80,7 @@
   </header>
 
   <section>
-    <form action="https://formspree.io/f/mdkzjarw" method="POST" id="consultForm">
+    <form id="interestForm" action="https://formspree.io/f/mdkzjarw" method="POST">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required />
 
@@ -113,45 +113,37 @@
   </section>
 
   <script>
-    const form = document.getElementById('consultForm');
+    const form = document.getElementById('interestForm');
 
     form.addEventListener('submit', function (e) {
       let valid = true;
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('phoneError').textContent = '';
+      document.getElementById('dateError').textContent = '';
 
-      // Email domain check
       const email = document.getElementById('email').value;
-      const emailError = document.getElementById('emailError');
-      const allowedDomains = ['.com', '.org', '.net', '.edu'];
-      if (!allowedDomains.some(d => email.endsWith(d))) {
-        emailError.textContent = 'Please use a valid professional email domain (.com, .org, etc).';
-        valid = false;
-      } else {
-        emailError.textContent = '';
-      }
-
-      // Phone format check
       const phone = document.getElementById('phone').value;
-      const phoneError = document.getElementById('phoneError');
-      const phonePattern = /^\\+?[0-9]{7,15}$/;
-      if (!phonePattern.test(phone.replace(/\\s|\\-/g, ''))) {
-        phoneError.textContent = 'Please enter a valid phone number (digits only).';
+      const date = document.getElementById('date').value;
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.(com|org|net|edu)$/i;
+      if (!emailPattern.test(email)) {
+        document.getElementById('emailError').textContent = 'Please enter a valid email (.com, .org, .net, .edu).';
         valid = false;
-      } else {
-        phoneError.textContent = '';
       }
 
-      // Date check
-      const date = document.getElementById('date').value;
-      const dateError = document.getElementById('dateError');
-      const selectedDate = new Date(date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      if (selectedDate < today) {
-        dateError.textContent = 'Please select a date that is today or later.';
+      const phonePattern = /^\d{7,15}$/;
+      if (!phonePattern.test(phone.replace(/[^\d]/g, ''))) {
+        document.getElementById('phoneError').textContent = 'Please enter a valid phone number with 7 to 15 digits.';
         valid = false;
-      } else {
-        dateError.textContent = '';
+      }
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const inputDate = new Date(date);
+      inputDate.setHours(0,0,0,0);
+      if (inputDate < today) {
+        document.getElementById('dateError').textContent = 'Please choose today or a future date.';
+        valid = false;
       }
 
       if (!valid) {
