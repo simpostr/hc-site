@@ -42,18 +42,12 @@
       font-weight: bold;
     }
 
-    input, textarea, select {
+    input, textarea {
       padding: 0.75rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1rem;
-    }
-
-    .error {
-      color: red;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
     }
 
     button {
@@ -65,7 +59,6 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
-      margin-top: 1rem;
     }
 
     button:hover {
@@ -80,17 +73,15 @@
   </header>
 
   <section>
-    <form id="interestForm" action="https://formspree.io/f/mdkzjarw" method="POST">
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required />
 
       <label for="email">Email Address</label>
       <input type="email" id="email" name="email" required />
-      <div class="error" id="emailError"></div>
 
       <label for="phone">Phone Number</label>
       <input type="tel" id="phone" name="phone" required />
-      <div class="error" id="phoneError"></div>
 
       <label for="organization">Organization</label>
       <input type="text" id="organization" name="organization" />
@@ -98,53 +89,14 @@
       <label for="role">Your Role/Title</label>
       <input type="text" id="role" name="role" />
 
-      <label for="needs">Indicate Reason for Consultation</label>
+      <label for="needs">Briefly Describe Your Needs</label>
       <textarea id="needs" name="needs" rows="4" required></textarea>
 
-      
+      <label for="preferred_datetime">Preferred Date & Time</label>
+      <input type="text" id="preferred_datetime" name="preferred_datetime" placeholder="e.g., July 5th at 2:00 PM EST" required />
 
       <button type="submit">Submit Request</button>
     </form>
   </section>
-
-  <script>
-    const form = document.getElementById('interestForm');
-
-    form.addEventListener('submit', function (e) {
-      let valid = true;
-      document.getElementById('emailError').textContent = '';
-      document.getElementById('phoneError').textContent = '';
-      document.getElementById('dateError').textContent = '';
-
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const date = document.getElementById('date').value;
-
-      const emailPattern = /^[^\s@]+@[^\s@]+\.(com|org|net|edu)$/i;
-      if (!emailPattern.test(email)) {
-        document.getElementById('emailError').textContent = 'Please enter a valid email (.com, .org, .net, .edu).';
-        valid = false;
-      }
-
-      const phonePattern = /^\d{7,15}$/;
-      if (!phonePattern.test(phone.replace(/[^\d]/g, ''))) {
-        document.getElementById('phoneError').textContent = 'Please enter a valid phone number with 7 to 15 digits.';
-        valid = false;
-      }
-
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const inputDate = new Date(date);
-      inputDate.setHours(0,0,0,0);
-      if (inputDate < today) {
-        document.getElementById('dateError').textContent = 'Please choose today or a future date.';
-        valid = false;
-      }
-
-      if (!valid) {
-        e.preventDefault();
-      }
-    });
-  </script>
 </body>
 </html>
